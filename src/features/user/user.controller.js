@@ -45,14 +45,43 @@ class UserController {
             }
           );
 
-          //send token to user
-          return res.status(200).json({ success: true, token: token });
+          await this.userRepo.pushToken(token, user[0]._id);
+
+          //send token to user using a cookie
+          res.cookie("jwtToken", token, {
+            maxAge: 5 * 60 * 60 * 1000,
+            httpOnly: true,
+          });
+          res.cookie("email", user[0].email, {
+            maxAge: 5 * 60 * 60 * 1000,
+            httpOnly: true,
+          });
+          return res
+            .status(200)
+            .json({ success: true, message: "User logged in successfully" });
         } else {
           throw new ApplicationError("Invalid Credentials", 400);
         }
       }
     } catch (err) {
       console.log(err.message);
+      next(err);
+    }
+  }
+
+  logout(req, res, next) {
+    res
+      .clearCookie("jwtToken")
+      .json({ success: true, message: "User logged out successfully" });
+  }
+
+  async logoutFromAllDevices(req, res, next) {
+    try {
+      const userId = req.userId;
+      // console.log(userId);
+      await this.userRepo.deleteAllTokens(userId);
+      this.logout(req, res, next);
+    } catch (err) {
       next(err);
     }
   }

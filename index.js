@@ -1,6 +1,7 @@
 import express from "express";
 import postRouter from "./src/features/post/post.routes.js";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import { ApplicationError } from "./src/error-handler/applicationError.js";
 import userRouter from "./src/features/user/user.routes.js";
@@ -8,6 +9,7 @@ import userRouter from "./src/features/user/user.routes.js";
 const server = express();
 
 server.use(bodyParser.json());
+server.use(cookieParser());
 server.use("/api/posts", postRouter);
 server.use("/api/users", userRouter);
 
