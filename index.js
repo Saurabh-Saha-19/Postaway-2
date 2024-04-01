@@ -19,14 +19,14 @@ server.get("/", (req, res) => {
 server.use((err, req, res, next) => {
   console.log(err.message);
   if (err instanceof mongoose.Error.ValidationError) {
-    return res.status(400).json({ success: false, error: err.message });
+    return res.status(400).json({ success: false, message: err.message });
   }
 
   if (err instanceof ApplicationError) {
-    return res.status(err.code).json({ success: false, error: err.message });
+    return res.status(err.code).json({ success: false, message: err.message });
   }
 
-  res.status(500).json({ success: false, error: "Something went wrong" });
+  res.status(500).json({ success: false, message: "Something went wrong" });
 });
 
 export default server;
