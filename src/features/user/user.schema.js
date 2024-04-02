@@ -20,6 +20,11 @@ const userSchema = mongoose.Schema({
   avatar: {
     type: String,
   },
+  token: [
+    {
+      type: String,
+    },
+  ],
 });
 
 export { userSchema };
