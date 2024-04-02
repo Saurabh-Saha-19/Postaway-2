@@ -5,6 +5,8 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import { ApplicationError } from "./src/error-handler/applicationError.js";
 import userRouter from "./src/features/user/user.routes.js";
+import commentRouter from "./src/features/comment/comment.routes.js";
+import likeRouter from "./src/features/like/like.routes.js";
 
 const server = express();
 
@@ -13,6 +15,8 @@ server.use(cookieParser());
 server.use(express.static("public"));
 server.use("/api/posts", postRouter);
 server.use("/api/users", userRouter);
+server.use("/api/comments", commentRouter);
+server.use("/api/likes", likeRouter);
 
 server.get("/", (req, res) => {
   res.send("Response successfully generated");

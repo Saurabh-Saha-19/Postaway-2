@@ -1,27 +1,22 @@
 import mongoose from "mongoose";
 
-const postSchema = mongoose.Schema({
-  caption: {
+const commentSchema = mongoose.Schema({
+  content: {
     type: String,
     required: true,
-  },
-
-  imageUrl: {
-    type: String,
   },
 
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
     ref: "User",
+    required: true,
   },
 
-  comments: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment",
-    },
-  ],
+  post: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "Post",
+  },
 
   likes: [
     {
@@ -31,4 +26,4 @@ const postSchema = mongoose.Schema({
   ],
 });
 
-export { postSchema };
+export default commentSchema;
