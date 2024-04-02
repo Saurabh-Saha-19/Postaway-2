@@ -10,6 +10,7 @@ const server = express();
 
 server.use(bodyParser.json());
 server.use(cookieParser());
+server.use(express.static("public"));
 server.use("/api/posts", postRouter);
 server.use("/api/users", userRouter);
 
